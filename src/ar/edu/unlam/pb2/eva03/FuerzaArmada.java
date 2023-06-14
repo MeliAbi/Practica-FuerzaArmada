@@ -127,11 +127,11 @@ public class FuerzaArmada {
 		//		}
 		Boolean a=false;
 		if((nuevo instanceof Avion || nuevo instanceof HidroAvion ) && batallas.get(nomBatalla).getTipo().equals(TipoDeBatalla.VOLADOR)) {
-			return a;
+			return a=true;
 		}else if((nuevo instanceof Tanque || nuevo instanceof Anfibio )  && batallas.get(nomBatalla).getTipo().equals(TipoDeBatalla.TERRESTRE)) {
-			return a;
+			return a=true;
 		}else if((nuevo instanceof Submarino || nuevo instanceof HidroAvion || nuevo instanceof Anfibio) && batallas.get(nomBatalla).getTipo().equals(TipoDeBatalla.ACUATICO)) {
-			return a;
+			return a=true;
 		}else if (a==false) {
 			throw new VehiculoIncompatible("Tipos incompatibles");
 		}
