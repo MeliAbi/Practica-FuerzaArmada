@@ -48,6 +48,5 @@ public class HidroAvion extends Vehiculo implements Volador,Acuatico{
 		this.profundidad = profundidad;
 	}
 	
-
-
+	
 }

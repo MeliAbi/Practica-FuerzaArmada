@@ -81,7 +81,7 @@ public class FuerzaArmada {
 		this.batallas = batallas;
 	}
 
-	public Vehiculo buscarVehiculoEnConvoy(String codVehiculo) {
+	public Vehiculo buscarVehiculoEnConvoy(String codVehiculo) throws VehiculoInexistente{
 
 		Vehiculo nuevo = null;
 
@@ -89,10 +89,12 @@ public class FuerzaArmada {
 			if (actual.getCodigo().equals(codVehiculo)) {
 				nuevo=actual;
 			}
+		}
 			if(nuevo!=null) {
+				
 				if(nuevo instanceof Avion) {
 					return ((Avion)nuevo);
-
+					
 				}else if(nuevo instanceof HidroAvion) {
 					return ((HidroAvion)nuevo);
 
@@ -106,13 +108,15 @@ public class FuerzaArmada {
 					return ((Tanque)nuevo);
 
 				}
+			}else {
+				throw new VehiculoInexistente("El vehículo con código " + codVehiculo + " no existe en el convoy.");
 			}
-		}	
+			
 		return nuevo;
 
 	}
 
-	public boolean queCoincidaTipoDeBatalla(String nomBatalla, Vehiculo nuevo) {
+	public Boolean queCoincidaTipoDeBatalla(String nomBatalla, Vehiculo nuevo)throws VehiculoIncompatible {
 
 		//		if(nuevo instanceof Volador && batallas.get(nomBatalla).getTipo().equals(TipoDeBatalla.VOLADOR)) {
 		//			return true;
@@ -121,23 +125,39 @@ public class FuerzaArmada {
 		//		}else if(nuevo instanceof Acuatico && batallas.get(nomBatalla).getTipo().equals(TipoDeBatalla.ACUATICO)) {
 		//			return true;
 		//		}
-
+		Boolean a=false;
 		if((nuevo instanceof Avion || nuevo instanceof HidroAvion ) && batallas.get(nomBatalla).getTipo().equals(TipoDeBatalla.VOLADOR)) {
-			return true;
+			return a;
 		}else if((nuevo instanceof Tanque || nuevo instanceof Anfibio )  && batallas.get(nomBatalla).getTipo().equals(TipoDeBatalla.TERRESTRE)) {
-			return true;
+			return a;
 		}else if((nuevo instanceof Submarino || nuevo instanceof HidroAvion || nuevo instanceof Anfibio) && batallas.get(nomBatalla).getTipo().equals(TipoDeBatalla.ACUATICO)) {
-			return true;
+			return a;
+		}else if (a==false) {
+			throw new VehiculoIncompatible("Tipos incompatibles");
 		}
-		return false;
+		return a;
 	}
 
-	public boolean enviarALaBatalla(String nomBatalla, String codVehiculo) {
+	public Boolean enviarALaBatalla(String nomBatalla, String codVehiculo) {
 
-		Vehiculo nuevo = buscarVehiculoEnConvoy(codVehiculo);
-		if(batallas.containsKey(nomBatalla) && nuevo!=null && queCoincidaTipoDeBatalla(nomBatalla,nuevo)) {
-			batallas.get(nomBatalla).agregarVehiculosEnLaBatalla(nuevo);
-			return true;
+		Vehiculo nuevo = null;
+		try {
+		nuevo=buscarVehiculoEnConvoy(codVehiculo);
+		}
+		catch (VehiculoInexistente e) {
+			System.out.println("Error: "+ e.getMessage());
+		}
+		
+		try {
+			if(batallas.containsKey(nomBatalla) && nuevo!=null && queCoincidaTipoDeBatalla(nomBatalla,nuevo)) {
+				
+				Batalla nuevaBatalla=batallas.get(nomBatalla);
+				nuevaBatalla.agregarVehiculosEnLaBatalla(nuevo);
+				
+				return true;
+			}
+		} catch (VehiculoIncompatible e) {
+			e.getMessage();
 		}
 		return false;
 	}

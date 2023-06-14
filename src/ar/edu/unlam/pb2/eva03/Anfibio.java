@@ -31,7 +31,12 @@ public class Anfibio extends Vehiculo implements Acuatico, Terrestre{
 	public void setProfundidad(Double profundidad) {
 		this.profundidad = profundidad;
 	}
-
 	
+	
+	 
+	      
+	    
 
+		
+	    
 }

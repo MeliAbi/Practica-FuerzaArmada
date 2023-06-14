@@ -3,7 +3,7 @@ package ar.edu.unlam.pb2.eva03;
 import java.util.Objects;
 
 public abstract class Vehiculo {
-	private String codigo="";
+	protected String codigo="";
 	private String modelo="";
 	private Double velocidad;
 	
@@ -46,13 +46,15 @@ public abstract class Vehiculo {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Vehiculo))
 			return false;
 		Vehiculo other = (Vehiculo) obj;
 		return Objects.equals(codigo, other.codigo);
 	}
 
+	public String toString() {
+		String mensaje= "Codigo: "+this.codigo + "Modelo: " + this.modelo;
+				return mensaje;
+	}
 	
 }

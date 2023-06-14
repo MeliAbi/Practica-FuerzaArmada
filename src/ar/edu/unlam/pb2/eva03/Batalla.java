@@ -1,8 +1,7 @@
 package ar.edu.unlam.pb2.eva03;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.HashSet;
 
 /*
 import ar.edu.unlam.pb2.eva03.enumeradores.TipoDeBatalla;
@@ -17,13 +16,13 @@ public class Batalla {
 	private Double latitud=0.0;
 	private Double longitud=0.0;
 	private TipoDeBatalla tipo=null;
-	Set<Vehiculo> vehiculosEnLaBatalla;
+	private Set<Vehiculo> vehiculosEnLaBatalla;
 	
 	public Batalla (TipoDeBatalla tipo, Double longitud, Double latitud) {
 		this.latitud=latitud;
 		this.tipo=tipo;
 		this.longitud=longitud;
-		vehiculosEnLaBatalla = new TreeSet<Vehiculo>();
+		vehiculosEnLaBatalla = new HashSet<Vehiculo>();
 	}
 
 	public Double getLatitud() {
@@ -49,10 +48,20 @@ public class Batalla {
 	public void setTipo(TipoDeBatalla tipo) {
 		this.tipo = tipo;
 	}
+	
 
+	public Set<Vehiculo> getVehiculosEnLaBatalla() {
+		return vehiculosEnLaBatalla;
+	}
+
+	public void setVehiculosEnLaBatalla(Set<Vehiculo> vehiculosEnLaBatalla) {
+		this.vehiculosEnLaBatalla = vehiculosEnLaBatalla;
+	}
 
 	public void agregarVehiculosEnLaBatalla(Vehiculo vehiculo) {
+
 		vehiculosEnLaBatalla.add(vehiculo);
+		
 	}
 
 	public String toString () {
