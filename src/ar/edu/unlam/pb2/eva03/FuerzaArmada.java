@@ -138,7 +138,7 @@ public class FuerzaArmada {
 		return a;
 	}
 
-	public Boolean enviarALaBatalla(String nomBatalla, String codVehiculo) {
+	public Boolean enviarALaBatalla(String nomBatalla, String codVehiculo) throws VehiculoInexistente, VehiculoIncompatible {
 
 		Vehiculo nuevo = null;
 		try {
@@ -146,6 +146,7 @@ public class FuerzaArmada {
 		}
 		catch (VehiculoInexistente e) {
 			System.out.println("Error: "+ e.getMessage());
+			throw new VehiculoInexistente("");
 		}
 		
 		try {
@@ -157,7 +158,8 @@ public class FuerzaArmada {
 				return true;
 			}
 		} catch (VehiculoIncompatible e) {
-			e.getMessage();
+			System.out.println("Error: "+ e.getMessage());
+			throw new VehiculoIncompatible("");
 		}
 		return false;
 	}
